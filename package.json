@@ -31,7 +31,11 @@
     "prettify": "prettier --write",
     "precommit": "lint:staged",
     "test": "jest --coverage",
-    "test:badges": "npm run test  && jest-coverage-badges --output './badges'"
+    "test:badges": "npm run test  && jest-coverage-badges --output './badges'",
+    "generateModels": "sequelize-auto -o './lib/models' -d temp_dev -h localhost -u root -p 3306 -x password -e mysql --lang es6 --caseProp c --caseModel p -",
+    "migrate:local": "ENVIRONMENT_NAME=local npx sequelize-cli db:migrate",
+    "migrate:dev": "ENVIRONMENT_NAME=development npx sequelize-cli db:migrate",
+    "migrate:prod": "ENVIRONMENT_NAME=production npx sequelize-cli db:migrate"
   },
   "peerDependencies": {
     "@hapi/boom": "^9.1.0"
@@ -44,6 +48,7 @@
     "@hapi/joi-date": "^2.0.1",
     "@hapi/vision": "^7.0.3",
     "axios": "^1.6.7",
+    "bcrypt": "^5.1.1",
     "cardinal": "^2.1.1",
     "cls-rtracer": "^2.6.3",
     "dotenv": "^16.4.5",
