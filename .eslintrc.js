@@ -31,6 +31,17 @@ module.exports = {
         'consistent-return': 'off',
         'no-return-assign': 'off',
       },
-    }
+    },
+    {
+      files: ['./lib/models/**/*.js'],
+      rules: {
+        'no-unused-vars': 'off',
+        'import/first': 'off',
+        'import/extensions': 'off',
+        'import/newline-after-import': 'off',
+        'prefer-destructuring': 'off',
+        
+      },
+    },
   ],
 };

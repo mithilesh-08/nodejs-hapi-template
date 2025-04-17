@@ -1,4 +1,3 @@
-'use strict';
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -86,7 +85,7 @@ module.exports = {
     return queryInterface.bulkInsert('role_permissions', rolePermissions, {});
   },
 
-  down: (queryInterface) => {
-    return queryInterface.bulkDelete('role_permissions', null, {});
-  }
+  down: (queryInterface) => 
+     queryInterface.bulkDelete('role_permissions', null, {})
+  
 };

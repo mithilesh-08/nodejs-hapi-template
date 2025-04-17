@@ -1,6 +1,7 @@
-const { SCOPE_TYPE } = require('esm')(module /* , options */)(
-  '../utils/constants'
-);
+// const { SCOPE_TYPE } = require('esm')(module /* , options */)(
+//   '../utils/constants'
+// );
+const { SCOPE_TYPE } = require('../utils/constants');
 
 module.exports = {
   up: (queryInterface) => {

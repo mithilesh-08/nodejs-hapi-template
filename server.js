@@ -231,7 +231,8 @@ if (!isTestEnv() && !isLocalEnv() && cluster.isMaster) {
     },
     (error) => {
       // eslint-disable-next-line no-console
-      logger().error(error, 'Server startup failed...');
+      console.log(error, 'Server startup failed...', JSON.stringify(error));
+      logger().error(error, 'Server startup failed...', JSON.stringify(error));
     }
   );
 

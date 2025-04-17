@@ -1,10 +1,9 @@
--- Drop the existing table
-DROP TABLE IF EXISTS users;
 
 -- Create new users table with desired structure
 CREATE TABLE users (
-        id CHAR(36) primary key default (UUID()),
+    id CHAR(36) primary key default (UUID()),
     role_id CHAR(36),
+    oauth_client_id INT(11) NOT NULL,
     name VARCHAR(255) NOT NULL,
     password VARCHAR(255),
     email VARCHAR(255) NOT NULL,
@@ -15,11 +14,3 @@ CREATE TABLE users (
 );
 
 
-
--- Add foreign key constraint if it doesn't exist
--- ALTER TABLE users
---     ADD CONSTRAINT fk_users_role_id FOREIGN KEY (role_id) REFERENCES roles(id);
-
--- Add index on phone_number if it doesn't exist
-
--- Update existing rows with UUID if needed

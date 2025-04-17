@@ -1,6 +1,7 @@
 
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
+
 module.exports = {
   up: async(queryInterface) => {
     const roles = await queryInterface.sequelize.query(
