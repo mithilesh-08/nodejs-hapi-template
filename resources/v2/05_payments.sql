@@ -12,10 +12,6 @@ create table if not exists payments (
     paid_at timestamp default null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
-    INDEX idx_payments_driver_id (driver_id),
-    INDEX idx_payments_rider_id (rider_id),
-    INDEX idx_payments_vehicle_id (vehicle_id),
-    INDEX idx_payments_trip_id (trip_id),
     INDEX idx_payments_status (status),
     INDEX idx_payments_paid_at (paid_at),
     INDEX idx_payments_status_paid_at (status, paid_at)
