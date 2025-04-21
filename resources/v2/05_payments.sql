@@ -7,7 +7,7 @@ create table if not exists payments (
     trip_id CHAR(36) not null,
     amount decimal(10,2) not null,
     payment_method varchar(50) not null,
-    status varchar(20) not null,
+    status enum('pending', 'completed', 'failed') not null,
     transaction_id varchar(255) default null UNIQUE,
     paid_at timestamp default null,
     created_at timestamp default current_timestamp,

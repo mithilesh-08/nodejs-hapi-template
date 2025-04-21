@@ -126,7 +126,7 @@
       "npm run lint:eslint:fix",
       "prettier --write",
       "git add --force",
-      "jest --findRelatedTests $STAGED_FILES"
+      "jest --findRelatedTests $STAGED_FILES --passWithNoTests"
     ],
     "*.json": [
       "prettier --write",
