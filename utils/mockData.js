@@ -39,6 +39,7 @@ export const mockData = {
     phone: '1234567890',
     createdAt: new Date(),
     updatedAt: new Date(),
+    userType: 'RIDER',
   },
 
   MOCK_VEHICLE_TYPE: {

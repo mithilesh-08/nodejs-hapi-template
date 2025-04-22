@@ -119,6 +119,33 @@ export function configDB(metadataOptions = DEFAULT_METADATA_OPTIONS) {
 
   oauthClientScopesMock.findAll = (query) =>
     oauthClientScopesMock.findById(query);
+
+  // Add roles mock
+  const rolesMock = DBConnectionMock.define('roles', { id: 1, name: 'ADMIN' });
+  rolesMock.findOne = (query) => Promise.resolve({ id: 1, name: 'ADMIN' });
+
+  // Add permissions mock
+  const permissionsMock = DBConnectionMock.define('permissions', {
+    id: 1,
+    name: 'READ',
+  });
+  permissionsMock.findAll = () => [
+    { id: 1, name: 'READ' },
+    { id: 2, name: 'WRITE' },
+  ];
+
+  // Add rolePermissions mock
+  const rolePermissionsMock = DBConnectionMock.define('rolePermissions', {
+    id: 1,
+    roleId: 1,
+    permissionId: 1,
+  });
+  rolePermissionsMock.findAll = (query) =>
+    Promise.resolve([
+      { id: 1, name: 'READ', permission: { id: 1, name: 'READ' } },
+      { id: 2, name: 'WRITE', permission: { id: 2, name: 'WRITE' } },
+    ]);
+
   return {
     users: userMock,
     vehicles: vehicleMock,
@@ -133,6 +160,9 @@ export function configDB(metadataOptions = DEFAULT_METADATA_OPTIONS) {
     oauthAccessTokens: oauthAccessTokensMock,
     oauthClientResources: oauthClientResourcesMock,
     oauthClientScopes: oauthClientScopesMock,
+    roles: rolesMock,
+    permissions: permissionsMock,
+    rolePermissions: rolePermissionsMock,
   };
 }
 
