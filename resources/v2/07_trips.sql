@@ -13,12 +13,6 @@ create table trips (
     status varchar(20) not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
-    -- constraint fk_trips_driver_id foreign key (driver_id) references users(id),
-    -- constraint fk_trips_rider_id foreign key (rider_id) references users(id),
-    -- constraint fk_trips_vehicle_id foreign key (vehicle_id) references vehicles(id)
-    INDEX idx_trips_driver_id (driver_id),
-    INDEX idx_trips_rider_id (rider_id),
-    INDEX idx_trips_vehicle_id (vehicle_id),
     INDEX idx_trips_status (status),
     INDEX idx_trips_start_time (start_time),
     INDEX idx_trips_end_time (end_time),
