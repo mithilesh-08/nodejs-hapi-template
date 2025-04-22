@@ -4,7 +4,5 @@ create table trip_locations (
     location POINT NOT NULL,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp,
-   
-    INDEX idx_trip_locations_trip_id (trip_id),
     SPATIAL INDEX idx_trip_locations_location (location)
 );
