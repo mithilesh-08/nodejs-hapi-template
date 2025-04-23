@@ -9,14 +9,14 @@ export const mockMetadata = (
   scope = SCOPE_TYPE.ADMIN,
   resourceType = OAUTH_CLIENT_ID,
 ) => ({
-  oauth_client_scope: {
+  oauthClientScope: {
     get: () => ({
       id: 1,
       oauth_client_id: 1,
       scope,
     }),
   },
-  oauth_client_resources: [
+  oauthClientResources: [
     {
       get: () => ({
         id: 1,
@@ -228,9 +228,9 @@ export const createMockTokenWithScope = (
 ) => ({
   oauthClientId: 'TEST_CLIENT_ID_1',
   metadata: {
-    scope: mockMetadata(scope).oauth_client_scope.get(),
+    scope: mockMetadata(scope).oauthClientScope.get(),
     resources: [
-      mockMetadata(scope, resourceType).oauth_client_resources[0].get(),
+      mockMetadata(scope, resourceType).oauthClientResources[0].get(),
     ],
   },
 });
