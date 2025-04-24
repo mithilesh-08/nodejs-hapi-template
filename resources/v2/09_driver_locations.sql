@@ -3,6 +3,6 @@ create table driver_locations (
     driver_id CHAR(36) not null,
     location POINT NOT NULL,
     created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp on update current_timestamp,
+    updated_at timestamp default current_timestamp,
     SPATIAL INDEX idx_driver_locations_location (location)
 ); 
