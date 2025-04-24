@@ -58,7 +58,7 @@ const initServer = async () => {
         auth: false,
         templates: path.join(
           __dirname,
-          '../node_modules/hapi-swaggerui/templates'
+          '../node_modules/hapi-swaggerui/templates',
         ),
         info: {
           title: 'Node Hapi Template API documentation',
@@ -111,7 +111,7 @@ const initServer = async () => {
 
   // register auth plugin
   await server.register({
-    plugin: authBearer
+    plugin: authBearer,
   });
   server.auth.strategy('bearer', 'bearer-access-token', authConfig);
   server.auth.default('bearer');
@@ -153,7 +153,9 @@ const initServer = async () => {
     const { response } = request;
     const responseSource = response.source;
     // hack for hapi-swagger
-    if (!["/documentation", "/swaggerui/"].map(p => p.includes(request.path))) { 
+    if (
+      !['/documentation', '/swaggerui/'].map((p) => p.includes(request.path))
+    ) {
       response.source = mapKeysDeep(responseSource, (keys) => snakeCase(keys));
       if (response.header) {
         const requestId = rTracer.id();
@@ -161,7 +163,6 @@ const initServer = async () => {
         logger().info('API Success: ', response.source);
       }
     }
-    
 
     return h.continue;
   };
@@ -187,7 +188,6 @@ const initServer = async () => {
 
   // eslint-disable-next-line no-console
   logger().info('Server running on: ', server.info.uri);
-
 
   server.events.on('request', (_, error) => {
     if (error) {
@@ -231,8 +231,7 @@ if (!isTestEnv() && !isLocalEnv() && cluster.isMaster) {
     },
     (error) => {
       // eslint-disable-next-line no-console
-      logger().error(error, 'Server startup failed...');
-    }
+      logger().error(error, 'Server startup failed...', JSON.stringify(error));
+    },
   );
-
 }

@@ -1,7 +1,6 @@
 const range = require('lodash/range');
-const { OAUTH_CLIENT_ID } = require('esm')(module /* , options */)(
-  '../utils/constants',
-);
+
+const { OAUTH_CLIENT_ID } = require('../utils/constants');
 
 module.exports = {
   up: (queryInterface) => {
@@ -12,5 +11,6 @@ module.exports = {
     }));
     return queryInterface.bulkInsert('oauth_client_resources', arr, {});
   },
-  down: (queryInterface) => queryInterface.bulkDelete('oauth_client_resources', null, {}),
+  down: (queryInterface) =>
+    queryInterface.bulkDelete('oauth_client_resources', null, {}),
 };

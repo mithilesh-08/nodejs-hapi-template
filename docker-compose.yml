@@ -1,7 +1,8 @@
 version: '3'
 services:
   db_mysql:
-    image: mysql:5.7
+    image: mysql:8.0.33
+    platform: linux/arm64/v8
     ports:
       - '3306:3306'
     restart: always
@@ -11,7 +12,8 @@ services:
       MYSQL_ROOT_PASSWORD: password
 
   redis:
-    image: 'redis:alpine'
+    image: 'redis:7-alpine'
+    platform: linux/arm64/v8
     ports:
       - '6379:6379'
     command: ['redis-server', '--bind', 'redis', '--port', '6379']
