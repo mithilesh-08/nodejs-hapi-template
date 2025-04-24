@@ -33,7 +33,7 @@
     "test": "jest --coverage",
     "test:badges": "npm run test  && jest-coverage-badges --output './badges'",
     "createDb:local": "ENVIRONMENT_NAME=local npx sequelize-cli db:create",
-    "generateModels": "sequelize-auto -o './lib/models' -d temp_dev -h localhost -u root -p 3306 -x password -e mysql --lang esm --caseProp c --caseModel p --caseFile c --useDefine",
+    "generateModels": "sequelize-auto -o './lib/models' -d temp_dev -h localhost -u root -p 3306 -x password -e mysql --lang esm --caseProp c --caseModel c --caseFile c --useDefine",
     "migrate:local": "ENVIRONMENT_NAME=local npx sequelize-cli db:migrate",
     "migrate:dev": "ENVIRONMENT_NAME=development npx sequelize-cli db:migrate",
     "migrate:prod": "ENVIRONMENT_NAME=production npx sequelize-cli db:migrate"
@@ -126,7 +126,7 @@
       "npm run lint:eslint:fix",
       "prettier --write",
       "git add --force",
-      "jest --findRelatedTests $STAGED_FILES"
+      "jest --findRelatedTests $STAGED_FILES --passWithNoTests"
     ],
     "*.json": [
       "prettier --write",

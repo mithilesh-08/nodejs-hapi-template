@@ -8,5 +8,5 @@ create table pricing_configs (
     effective_from timestamp not null,
     effective_to timestamp not null,
     created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp on update current_timestamp
+    updated_at timestamp default current_timestamp
 );

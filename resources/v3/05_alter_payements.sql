@@ -1,6 +1,3 @@
-
-
--- Add foreign key constraints for payments table
 ALTER TABLE payments
     ADD CONSTRAINT fk_payments_driver_id 
     FOREIGN KEY (driver_id) 
