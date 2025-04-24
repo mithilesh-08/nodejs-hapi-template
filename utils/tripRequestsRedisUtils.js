@@ -56,13 +56,13 @@ export const storeTripRequest = async (
       { id: key, segment: 'tripRequests' },
       JSON.stringify(tripRequestData),
       expiry * 1000,
-    ); // Catbox expects milliseconds
+    );
 
     // Add to geospatial index for location-based queries using raw Redis commands
-    await client.connection.client.geoadd(
+    await client.client.geoadd(
       `${TRIP_REQUESTS_PREFIX}:geo`,
-      tripRequestData.pickup.coordinates[0], // longitude
-      tripRequestData.pickup.coordinates[1], // latitude
+      tripRequestData.pickup.longitude,
+      tripRequestData.pickup.latitude,
       tripRequestData.id,
     );
 
@@ -89,7 +89,7 @@ export const getTripRequestsNearby = async (
 ) => {
   try {
     const client = await getRedisClient();
-    const redis = client.connection.client;
+    const redis = client.client;
 
     // Get trip request IDs within radius
     const geoResults = await redis.georadius(
@@ -103,7 +103,10 @@ export const getTripRequestsNearby = async (
       'COUNT',
       limit,
     );
-
+    console.log(
+      'GEO-RESULTS-======================================>',
+      geoResults,
+    );
     // No results
     if (!geoResults || geoResults.length === 0) {
       return [];
@@ -118,6 +121,11 @@ export const getTripRequestsNearby = async (
         });
         return result ? result.item : null;
       }),
+    );
+
+    console.log(
+      'TRIP-REQUESTS-DATA-======================================>',
+      tripRequestsData,
     );
 
     // Parse and add distance information
@@ -168,7 +176,7 @@ export const getTripRequestById = async (tripRequestId) => {
 export const deleteTripRequest = async (tripRequestId) => {
   try {
     const client = await getRedisClient();
-    const redis = client.connection.client;
+    const redis = client.client;
     const key = `${TRIP_REQUESTS_PREFIX}:${tripRequestId}`;
 
     // Remove from geospatial index

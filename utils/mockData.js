@@ -39,7 +39,33 @@ export const mockData = {
     phone: '1234567890',
     createdAt: new Date(),
     updatedAt: new Date(),
-    userType: 'RIDER',
+    userType: 'DRIVER',
+    vehicles: [
+      {
+        id: '44c08199-e3d6-434d-9bf7-b4b909556e3a',
+        name: 'Swift',
+        vehicleTypeId: '1e918ca0-f054-4ae8-9588-4c9fe876c5ab',
+        driverId: '4e4c29f6-1689-41ee-8419-e17e1ed617ee',
+        licensePlate: 'MH12PT6931',
+        color: 'White',
+        year: 2016,
+        createdAt: '2025-04-24T11:29:40.000Z',
+        updatedAt: '2025-04-24T11:29:40.000Z',
+        driver: {
+          id: '4e4c29f6-1689-41ee-8419-e17e1ed617ee',
+          name: 'Driver1',
+          email: 'driver1@wednesday.is',
+          createdAt: '2025-04-24T08:51:11.000Z',
+          updatedAt: '2025-04-24T08:51:11.000Z',
+        },
+        vehicleType: {
+          id: '1e918ca0-f054-4ae8-9588-4c9fe876c5ab',
+          name: 'HATCHBACK',
+          createdAt: '2025-04-24T11:27:06.000Z',
+          updatedAt: '2025-04-24T11:27:06.000Z',
+        },
+      },
+    ],
   },
 
   MOCK_VEHICLE_TYPE: {

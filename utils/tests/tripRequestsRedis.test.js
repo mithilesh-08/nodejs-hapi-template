@@ -20,12 +20,10 @@ jest.mock('@hapi/catbox-redis', () => ({
     set: mockSet,
     get: mockGet,
     drop: mockDrop,
-    connection: {
-      client: {
-        geoadd: mockGeoadd,
-        georadius: mockGeoradius,
-        zrem: mockZrem,
-      },
+    client: {
+      geoadd: mockGeoadd,
+      georadius: mockGeoradius,
+      zrem: mockZrem,
     },
   })),
 }));
@@ -35,12 +33,14 @@ const sampleTripRequest = {
   id: uuidv4(),
   riderId: uuidv4(),
   pickup: {
-    type: 'Point',
-    coordinates: [10.123, 20.456], // [longitude, latitude]
+    latitude: 20.456,
+    longitude: 10.123,
+    address: '123 Test St',
   },
   dropoff: {
-    type: 'Point',
-    coordinates: [11.234, 21.567],
+    latitude: 21.567,
+    longitude: 11.234,
+    address: '456 Example Ave',
   },
   price: 15.5,
   distance: 5.2, // km
@@ -54,7 +54,7 @@ describe('Trip Requests Redis DAO', () => {
 
   describe('storeTripRequest', () => {
     it('should store a trip request in Redis', async () => {
-      const { storeTripRequest } = require('../tripRequestsRedisDao');
+      const { storeTripRequest } = require('../tripRequestsRedisUtils');
 
       const result = await storeTripRequest(sampleTripRequest);
 
@@ -69,8 +69,8 @@ describe('Trip Requests Redis DAO', () => {
 
       expect(mockGeoadd).toHaveBeenCalledWith(
         'trip:requests:geo',
-        sampleTripRequest.pickup.coordinates[0],
-        sampleTripRequest.pickup.coordinates[1],
+        sampleTripRequest.pickup.longitude,
+        sampleTripRequest.pickup.latitude,
         sampleTripRequest.id,
       );
 
@@ -81,7 +81,7 @@ describe('Trip Requests Redis DAO', () => {
     it('should handle errors gracefully', async () => {
       mockSet.mockRejectedValueOnce(new Error('Redis error'));
 
-      const { storeTripRequest } = require('../tripRequestsRedisDao');
+      const { storeTripRequest } = require('../tripRequestsRedisUtils');
 
       await expect(storeTripRequest(sampleTripRequest)).rejects.toThrow(
         'Redis error',
@@ -103,7 +103,7 @@ describe('Trip Requests Redis DAO', () => {
         ttl: 300000,
       });
 
-      const { getTripRequestsNearby } = require('../tripRequestsRedisDao');
+      const { getTripRequestsNearby } = require('../tripRequestsRedisUtils');
 
       const longitude = 10.0;
       const latitude = 20.0;
@@ -140,7 +140,7 @@ describe('Trip Requests Redis DAO', () => {
     it('should return empty array when no results found', async () => {
       mockGeoradius.mockResolvedValueOnce([]);
 
-      const { getTripRequestsNearby } = require('../tripRequestsRedisDao');
+      const { getTripRequestsNearby } = require('../tripRequestsRedisUtils');
 
       const results = await getTripRequestsNearby(10, 20, 5);
 
@@ -157,7 +157,7 @@ describe('Trip Requests Redis DAO', () => {
         ttl: 300000,
       });
 
-      const { getTripRequestById } = require('../tripRequestsRedisDao');
+      const { getTripRequestById } = require('../tripRequestsRedisUtils');
 
       const result = await getTripRequestById(sampleTripRequest.id);
 
@@ -172,7 +172,7 @@ describe('Trip Requests Redis DAO', () => {
     it('should return null if trip request not found', async () => {
       mockGet.mockResolvedValueOnce(null);
 
-      const { getTripRequestById } = require('../tripRequestsRedisDao');
+      const { getTripRequestById } = require('../tripRequestsRedisUtils');
 
       const result = await getTripRequestById('non-existent-id');
 
@@ -182,7 +182,7 @@ describe('Trip Requests Redis DAO', () => {
 
   describe('deleteTripRequest', () => {
     it('should delete a trip request', async () => {
-      const { deleteTripRequest } = require('../tripRequestsRedisDao');
+      const { deleteTripRequest } = require('../tripRequestsRedisUtils');
 
       const result = await deleteTripRequest(sampleTripRequest.id);
 
@@ -201,7 +201,7 @@ describe('Trip Requests Redis DAO', () => {
     it('should handle errors gracefully', async () => {
       mockZrem.mockRejectedValueOnce(new Error('Redis error'));
 
-      const { deleteTripRequest } = require('../tripRequestsRedisDao');
+      const { deleteTripRequest } = require('../tripRequestsRedisUtils');
 
       const result = await deleteTripRequest(sampleTripRequest.id);
 
