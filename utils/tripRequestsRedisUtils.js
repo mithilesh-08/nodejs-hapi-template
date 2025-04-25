@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import CatboxRedis from '@hapi/catbox-redis';
+import { notFound } from '@hapi/boom';
 
 // Key prefix for trip requests
 const TRIP_REQUESTS_PREFIX = 'trip:requests';
@@ -163,8 +164,7 @@ export const getTripRequestById = async (tripRequestId) => {
 
     return data ? JSON.parse(data) : null;
   } catch (error) {
-    console.error('Error fetching trip request from Redis:', error);
-    return null;
+    return notFound('Trip request not found or already accepted');
   }
 };
 
