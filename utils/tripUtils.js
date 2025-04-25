@@ -26,15 +26,15 @@ export default async function calculateDistanceAndFare(pickup, dropoff) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = Number((R * c).toFixed(2));
 
-  const pricingConfig = await findAllPricingConfigs(1, 1);
+  const { pricingConfigs } = await findAllPricingConfigs(1, 1);
 
   // Check if pricing configuration exists
-  if (!pricingConfig || pricingConfig.length === 0) {
+  if (!pricingConfigs || pricingConfigs.length === 0) {
     throw new Error('No pricing configuration found');
   }
   // Convert values to integers to avoid type discrepancies
-  const baseFare = parseInt(pricingConfig[0].baseFare, 10);
-  const perKmRate = parseInt(pricingConfig[0].perKmRate, 10);
+  const baseFare = parseInt(pricingConfigs[0].baseFare, 10);
+  const perKmRate = parseInt(pricingConfigs[0].perKmRate, 10);
 
   const fare = Number((baseFare + perKmRate * distance).toFixed(2));
   return {
